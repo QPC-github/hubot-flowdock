@@ -88,7 +88,9 @@ class Flowdock extends Adapter
       hubotMsg = msg.replace(regex, botPrefix)
       if !message.flow && !hubotMsg.match(new RegExp("^#{@robot.name}", "i"))
         hubotMsg = botPrefix + hubotMsg
-      @receive new TextMessage(author, hubotMsg)
+      recievable = new TextMessage(author, hubotMsg)
+      recievable.rawFlowdockPayload = message
+      @receive recievable
 
   run: ->
     @login_email    = process.env.HUBOT_FLOWDOCK_LOGIN_EMAIL
